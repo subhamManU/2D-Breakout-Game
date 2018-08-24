@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            2D Breakout Game
+        </title>
+        <style>
+            #myCanvas{
+                background: lightblue;
+                display: block;
+                margin : auto;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" height="750" width="750"></canvas>
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+
+            ctx.beginPath();
+            ctx.rect(canvas.width/2,canvas.height/2,50,50);
+            ctx.fillStyle="red";
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.rect(canvas.width/3,canvas.height/3,50,50);
+            ctx.fillStyle="yellow";
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.rect(canvas.width/1.5,canvas.height/3,50,50);
+            ctx.strokeStyle="blue";
+            ctx.stroke();
+            ctx.fillStyle = "lightgreen";
+            ctx.fill();
+            ctx.closePath();
+
+        </script>
+    </body>
+</html>
