@@ -20,29 +20,35 @@
             
             var maxHeight = canvas.height;
             var maxWidth = canvas.width;
+            var ballRadius = 10;
+            dx = Math.random();
+            dy = Math.random();
+            
             var x = canvas.width/2;
             var y = canvas.height/2;
-            function draw(){
-                ctx.clearRect(0,0,maxWidth,maxHeight);
-                ctx.beginPath();
-                ctx.arc(x, y, 10, 0, Math.PI*2);
+
+            function drawBall(){
+                
+                ctx.arc(x, y, ballRadius, 0, Math.PI*2);
                 ctx.fillStyle="red";
                 ctx.fill();
-                ctx.closePath();
+                y += dy;
                 
-                dx = Math.random();
-                dy = Math.random();
-                
-                y += y;
-                
-                if(x>maxWidth || y>maxHeight){
-                 x = canvas.width/2;
-                 y = canvas.height/2;
+                if(y <ballRadius || y>maxHeight - ballRadius){
+                 //x = canvas.width/2;
+                 dy = -dy;
                 }
                 //Ball half disappearing into the wall
             }
+
+            function draw(){
+                ctx.clearRect(0,0,maxWidth,maxHeight);
+                ctx.beginPath();
+                drawBall();
+                ctx.closePath();
+            }
            
-            setInterval(draw,1000);
+            setInterval(draw,1);
            
         </script>
     </body>
