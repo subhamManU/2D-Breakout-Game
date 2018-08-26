@@ -16,19 +16,24 @@
 <body>
 	<canvas id="myCanvas" height="750" width="750"></canvas>
 	<script>
-		var canvas = document.getElementById("myCanvas");
-		var ctx = canvas.getContext("2d");
+		
+		function main(){
+			var canvas = document.getElementById("myCanvas");
+			var ctx = canvas.getContext("2d");
 
-		var maxHeight = canvas.height;
-		var maxWidth = canvas.width;
-		var ballRadius = 10;
-		dx = Math.random();
-		dy = Math.random();
+			var maxHeight = canvas.height;
+			var maxWidth = canvas.width;
+			var ballRadius = 10;
+			dx = Math.random();
+			dy = Math.random();
 
-		var x = canvas.width/2;
-		var y = canvas.height/2;
+			var x = canvas.width/2;
+			var y = canvas.height/2;
 
-		var color = getRandomColor();
+			var color = getRandomColor();
+
+		}
+		
 		function drawBall(){
 
 
