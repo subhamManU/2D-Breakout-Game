@@ -1,55 +1,81 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>
-            2D Breakout Game
-        </title>
-        <style>
-            #myCanvas{
-                background: lightblue;
-                display: block;
-                margin : auto;
-            }
-        </style>
-    </head>
-    <body>
-        <canvas id="myCanvas" height="750" width="750"></canvas>
-        <script>
-            var canvas = document.getElementById("myCanvas");
-            var ctx = canvas.getContext("2d");
-            
-            var maxHeight = canvas.height;
-            var maxWidth = canvas.width;
-            var ballRadius = 10;
-            dx = Math.random();
-            dy = Math.random();
-            
-            var x = canvas.width/2;
-            var y = canvas.height/2;
+<head>
+	<meta charset="utf-8" />
+	<title>
+		2D Breakout Game
+	</title>
+	<style>
+	#myCanvas{
+		background: lightblue;
+		display: block;
+		margin : auto;
+	}
+</style>
+</head>
+<body>
+	<canvas id="myCanvas" height="750" width="750"></canvas>
+	<script>
+		
+		
+			var canvas = document.getElementById("myCanvas");
+			var ctx = canvas.getContext("2d");
 
-            function drawBall(){
-                
-                ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-                ctx.fillStyle="red";
-                ctx.fill();
-                y += dy;
-                
-                if(y <ballRadius || y>maxHeight - ballRadius){
+			var maxHeight = canvas.height;
+			var maxWidth = canvas.width;
+			var ballRadius = 10;
+			dx = Math.random();
+			dy = Math.random();
+
+			var x = canvas.width/2;
+			var y = canvas.height/2;
+
+			var color = getRandomColor();
+
+		
+		
+		function drawBall(){
+
+
+			ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+			ctx.fillStyle=color;
+			ctx.fill();
+			y += dy;
+			x += dx;
+
+			
+			if(y <ballRadius || y>maxHeight - ballRadius){
                  //x = canvas.width/2;
                  dy = -dy;
-                }
-                
-            }
+                 color = getRandomColor(); 
+             }
 
-            function draw(){
-                ctx.clearRect(0,0,maxWidth,maxHeight);
-                ctx.beginPath();
-                drawBall();
-                ctx.closePath();
-            }
-           
-            setInterval(draw,1);
-           
-        </script>
-    </body>
-</html>
+             if(x <ballRadius || x>maxWidth - ballRadius){
+             	dx = -dx;
+             	color = getRandomColor();
+             }
+
+
+         }
+
+         function getRandomColor() {
+         	var letters = '0123456789ABCDEF';
+         	var color = '#';
+         	for (var i = 0; i < 6; i++) {
+         		color += letters[Math.floor(Math.random() * 16)];
+         	}
+         	return color;
+         }
+
+         function draw(){
+         	ctx.clearRect(0,0,maxWidth,maxHeight);
+         	ctx.beginPath();
+         	drawBall();
+         	ctx.closePath();
+         }
+
+         setInterval(draw,.005);
+
+     </script>
+ </body>
+ </html>
