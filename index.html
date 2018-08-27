@@ -17,42 +17,68 @@
 	<canvas id="myCanvas" height="750" width="750"></canvas>
 	<script>
 		
-		
-			var canvas = document.getElementById("myCanvas");
-			var ctx = canvas.getContext("2d");
+            // defining the canvas element
 
-			var maxHeight = canvas.height;
-			var maxWidth = canvas.width;
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+
+            var maxHeight = canvas.height;
+            var maxWidth = canvas.width;
+			//the radius of the ball
 			var ballRadius = 10;
-			dx = Math.random();
-			dy = Math.random();
+            //the next co-ordinate of the ball
+            dx = Math.random();
+            dy = Math.random();
+            //the starting position of the ball on the canvas
+            var xPosBall = canvas.width/2;
+            var yPosBall = canvas.height/2;
 
-			var x = canvas.width/2;
-			var y = canvas.height/2;
+            //paddle configurations
+            var paddleHeight = 10;
+            var paddleWidhth = 80;
+            
+            var xPosPaddle = (maxWidth - paddleWidhth)/2;
+            var yPosPaddle = maxHeight - paddleHeight;
+            var color = getRandomColor();
 
-			var color = getRandomColor();
-
-				
-		function drawBall(){
 
 
-			ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-			ctx.fillStyle=color;
-			ctx.fill();
-			y += dy;
-			x += dx;
 
-			
-			if(y <ballRadius || y>maxHeight - ballRadius){
+            //Handling the click functionality
+            var rightPressed = false;
+            var leftPressed = false;
+
+
+            function drawBall(){
+
+            	ctx.beginPath(); 
+            	ctx.arc(xPosBall, yPosBall, ballRadius, 0, Math.PI*2);
+            	ctx.fillStyle=color;
+            	ctx.fill();
+            	ctx.closePath();
+            	yPosBall += dy;
+            	xPosBall += dx;
+
+
+            	if(yPosBall <ballRadius){
                  //x = canvas.width/2;
                  dy = -dy;
                  color = getRandomColor(); 
-             }
 
-             if(x <ballRadius || x>maxWidth - ballRadius){
+             }
+             else if(yPosBall>maxHeight - ballRadius){
+             	if(xPosBall > xPosPaddle && xPosBall < xPosPaddle + paddleWidhth && yPosBall ){
+             		dy = -dy;
+             	}else{
+             		alert("GAME OVER");
+             		document.location.reload();	
+             	}
+             }
+             if(xPosBall <ballRadius || xPosBall>maxWidth - ballRadius){
              	dx = -dx;
              	color = getRandomColor();
              }
+
 
 
          }
@@ -68,11 +94,54 @@
 
          function draw(){
          	ctx.clearRect(0,0,maxWidth,maxHeight);
-         	ctx.beginPath();
+         	
+         	drawPaddle(); 
          	drawBall();
-         	ctx.closePath();
+
+         	
          }
 
+         function drawPaddle(){
+
+         	ctx.rect(xPosPaddle,yPosPaddle,paddleWidhth,paddleHeight);
+         	ctx.fillStyle = "black";
+         	ctx.fill();
+         	ctx.closePath();
+         }
+         
+         function keyDownHandler(e){
+         	if(e.keyCode == 39){
+         		rightPressed = true;
+         	}
+         	if(e.keyCode == 37){
+         		leftPressed = true;
+         	}
+         	movePaddle();
+         }
+
+         function keyUpHandler(e){
+         	if(e.keyCode == 39){
+         		rightPressed = false;
+         	}
+         	if(e.keyCode == 37){
+         		leftPressed = false;
+         	}
+
+         }
+
+         function movePaddle(){
+         	if(rightPressed && xPosPaddle < maxWidth - paddleWidhth){
+         		xPosPaddle +=10;
+         	}
+
+         	if(leftPressed && xPosPaddle > 0){
+         		xPosPaddle -=10;
+         	}
+
+
+         }
+         document.addEventListener("keydown",keyDownHandler,false);
+         document.addEventListener("keyup",keyUpHandler,false);
          setInterval(draw,.005);
 
      </script>
