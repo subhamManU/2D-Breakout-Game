@@ -40,28 +40,32 @@
             var yPosPaddle = maxHeight - paddleHeight;
 			var color = getRandomColor();
 
-		
+            //Handling the click functionality
+            var rightPressed = false;
+            var leftPressed = false;
 		
 		function drawBall(){
 
-
+            ctx.beginPath(); 
 			ctx.arc(xPosBall, yPosBall, ballRadius, 0, Math.PI*2);
 			ctx.fillStyle=color;
-			ctx.fill();
-			y += dy;
-			x += dx;
+            ctx.fill();
+            ctx.closePath();
+			yPosBall += dy;
+			xPosBall += dx;
 
 			
-			if(y <ballRadius || y>maxHeight - ballRadius){
+			if(yPosBall <ballRadius || yPosBall>maxHeight - ballRadius){
                  //x = canvas.width/2;
                  dy = -dy;
                  color = getRandomColor(); 
              }
 
-             if(x <ballRadius || x>maxWidth - ballRadius){
+             if(xPosBall <ballRadius || xPosBall>maxWidth - ballRadius){
              	dx = -dx;
              	color = getRandomColor();
              }
+            
 
 
          }
@@ -77,18 +81,54 @@
 
          function draw(){
          	ctx.clearRect(0,0,maxWidth,maxHeight);
-         	ctx.beginPath();
-         	//drawBall();
-            drawPaddle();
-         	ctx.closePath();
+         	
+             drawPaddle(); 
+             //drawBall();
+            
+         	
          }
 
          function drawPaddle(){
+             
              ctx.rect(xPosPaddle,yPosPaddle,paddleWidhth,paddleHeight);
              ctx.fillStyle = "black";
              ctx.fill();
+             ctx.closePath();
+         }
+         
+        function keyDownHandler(e){
+             if(e.keyCode == 39){
+                 rightPressed = true;
+             }
+             if(e.keyCode == 37){
+                 leftPressed = true;
+             }
+             movePaddle();
          }
 
+         function keyUpHandler(e){
+            if(e.keyCode == 39){
+                 rightPressed = false;
+             }
+             if(e.keyCode == 37){
+                 leftPressed = false;
+             }
+             movePaddle();
+         }
+
+         function movePaddle(){
+             if(rightPressed && xPosPaddle < maxWidth - paddleWidhth){
+                 xPosPaddle +=7;
+             }
+
+             if(leftPressed && xPosPaddle > 0){
+                 xPosPaddle -=7;
+             }
+
+
+         }
+         document.addEventListener("keydown",keyDownHandler,false);
+         document.addEventListener("keyup",keyUpHandler,false);
          setInterval(draw,.005);
 
      </script>
