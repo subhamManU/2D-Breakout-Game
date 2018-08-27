@@ -17,19 +17,27 @@
 	<canvas id="myCanvas" height="750" width="750"></canvas>
 	<script>
 		
-		
+            // defining the canvas element
 			var canvas = document.getElementById("myCanvas");
 			var ctx = canvas.getContext("2d");
 
 			var maxHeight = canvas.height;
 			var maxWidth = canvas.width;
-			var ballRadius = 10;
+			//the radius of the ball
+            var ballRadius = 10;
+            //the next co-ordinate of the ball
 			dx = Math.random();
 			dy = Math.random();
+            //the starting position of the ball on the canvas
+			var xPosBall = canvas.width/2;
+			var yPosBall = canvas.height/2;
 
-			var x = canvas.width/2;
-			var y = canvas.height/2;
-
+            //paddle configurations
+            var paddleHeight = 10;
+            var paddleWidhth = 80;
+            
+            var xPosPaddle = (maxWidth - paddleWidhth)/2;
+            var yPosPaddle = maxHeight - paddleHeight;
 			var color = getRandomColor();
 
 		
@@ -37,7 +45,7 @@
 		function drawBall(){
 
 
-			ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+			ctx.arc(xPosBall, yPosBall, ballRadius, 0, Math.PI*2);
 			ctx.fillStyle=color;
 			ctx.fill();
 			y += dy;
@@ -70,8 +78,15 @@
          function draw(){
          	ctx.clearRect(0,0,maxWidth,maxHeight);
          	ctx.beginPath();
-         	drawBall();
+         	//drawBall();
+            drawPaddle();
          	ctx.closePath();
+         }
+
+         function drawPaddle(){
+             ctx.rect(xPosPaddle,yPosPaddle,paddleWidhth,paddleHeight);
+             ctx.fillStyle = "black";
+             ctx.fill();
          }
 
          setInterval(draw,.005);
