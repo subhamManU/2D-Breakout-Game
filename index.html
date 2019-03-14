@@ -67,7 +67,7 @@
 
              }
              else if(yPosBall>maxHeight - ballRadius){
-             	if(xPosBall > xPosPaddle && xPosBall < xPosPaddle + paddleWidhth && yPosBall ){
+             	if(xPosBall > xPosPaddle && xPosBall < xPosPaddle + paddleWidhth && yPosBall < (ballRadius + paddleHeight)){
              		dy = -dy;
              	}else{
              		alert("GAME OVER");
